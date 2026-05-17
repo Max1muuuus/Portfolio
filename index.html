@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Максим</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">Максим</a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Головна</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">Про мене</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#skills">Навички</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#projects">Проекти</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Контакти</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <section id="home" class="hero d-flex align-items-center">
+        <div class="container text-center">
+            <img src="./imgs/ava.jpg" alt="Аватар" class="avatar mb-4">
+            <h1 class="display-4 fw-bold">
+                Привіт, я <span class="text-primary">Максим</span>
+            </h1>
+            <p class="lead text-muted">Веб/Бекенд розробник • 14 років</p>
+            <a href="#projects" class="btn btn-primary btn-lg mt-3 px-4">Дивитись роботи</a>
+        </div>
+    </section>
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="centered-content">
+                <h2 class="section-title text-center mb-5">Про мене</h2>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <p class="fs-5 text-muted">
+                            Привіт! Мене звати Максим, мені 14 років.
+                            Вчу веб та бекенд розробку: верстаю сайти, пишу скрипти на PHP і JavaScript, створюю проекти на C++, C# і Python. Маю досвід роботи з базами даних MySQL та PostgreSQL.
+                        </p>
+                        <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap">
+                            <span><i class="bi bi-rocket-takeoff-fill text-primary"></i> Маю велику мотивацію</span>
+                            <span><i class="bi bi-code-slash text-primary"></i> Зараз вивчаю PHP і JS</span>
+                            <span><i class="bi bi-filetype-cs text-primary"></i> Люблю C#</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="skills" class="py-5 bg-light">
+        <div class="container">
+            <div class="centeed-content">
+                <h2 class="section-title text-center mb-5">Що я вмію</h2>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="skill-card text-center p-3">
+                            <i class="bi bi-filetype-html text-danger display-4"></i>
+                            <i class="bi bi-filetype-css css-text display-4"></i>
+                            <p class="mt-2 fw-medium what-text">HTML5 + CSS3</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="skill-card text-center p-3">
+                            <i class="bi bi-filetype-js text-warning display-4"></i>
+                            <i class="bi bi-filetype-php php-text display-4"></i>
+                            <p class="mt-2 fw-medium what-text">JavaScript + PHP</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="skill-card text-center p-3">
+                            <i class="bi bi-cpu-fill cpp-text display-4"></i>   
+                            <p class="mt-2 fw-medium what-text">C++</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="skill-card text-center p-3">
+                            <i class="bi bi-filetype-cs csharp-text display-4"></i>
+                            <p class="mt-2 fw-medium what-text">C#</p>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3 col-lg-2">
+                        <div class="skill-card text-center p-3">
+                            <i class="bi bi-filetype-py python-text display-4"></i>
+                            <p class="mt-2 fw-medium what-text">Python</p>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        </div>
+    </section>
+    <section id="projects" class="py-5">
+        <div class="container">
+            <h2 class="section-title text-center mb-5">Мої проєкти</h2>
+            <div class="row justify-content-center">
+                <div class="col-6 col-md-6 col-lg-4">
+                    <div class="card project-card border-0 shadow-sm h-100">
+                        <img src="./imgs/1464463406_146433913119856152.jpg" class="card-img-top" alt="Moogle">
+                        <div class="card-body">
+                            <h5 class="card-title">Moogle</h5>
+                            <p class="card-text text-muted">Власна пошукова система.</p>
+                            <span class="badge btn-primary">C#</span>
+                            <span class="badge btn-primary">WinForms</span>
+                            <span class="badge btn-primary">WebView2</span>
+                            <a href="https://github.com/Max1muuuus/Moogle" class="contact-link" target="_blank" title="GitHub">
+                                <p class="mt-2 big">GitHub</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-6 col-lg-4">
+                    <div class="card project-card border-0 shadow-sm h-100">
+                        <img src="./imgs/statistika_i_monitoring.jpg" class="card-img-top" alt="Сайт-портфолио">
+                        <div class="card-body">
+                            <h5 class="card-title">CryptoMonitorning</h5>
+                            <p class="card-text text-muted">Власна крипто-графічна моніторингова система.</p>
+                            <span class="badge btn-primary">C#</span>
+                            <span class="badge btn-primary">WinForms</span>
+                            <span class="badge btn-primary">HTTP</span>
+                            <a href="https://github.com/Max1muuuus/CryptoMonitoring-Tests" class="contact-link" target="_blank" title="GitHub">
+                                <p class="mt-2 big">GitHub</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="section-title mb-5">Зв'язатися</h2>
+            <p class="text-muted mb-4 fs-5">Нижче ви можете зв'язатися зі мною та переглянути початковий код моїх інших проєктів та напрацювань.</p>
+            <div class="d-flex justify-content-center gap-4 flex-wrap">
+                <a href="https://github.com/Max1muuuus" class="contact-link" target="_blank" title="GitHub">
+                    <i class="bi bi-github display-4"></i>
+                    <p class="mt-2 small">GitHub</p>
+                </a>
+                <a href="https://t.me/max1muuuus" class="contact-link" target="_blank" title="Telegram">
+                    <i class="bi bi-telegram display-4"></i>
+                    <p class="mt-2 small">Telegram</p>
+                </a>
+            </div>
+        </div>
+    </section>
+    <footer class="py-4 bg-black border-top text-center">
+        <div class="container">
+            <p class="text-muted mb-0">
+                &copy; 2026 Максим, 14 років. Всі права захищені. Розроблено з любов'ю та ентузіазмом.
+            </p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./script.js"></script>
+    <script defer
+        src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447"
+        integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ=="
+        data-cf-beacon='{"version":"2024.11.0","token":"87a51e2c670b4288af93f77aaef2423d","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}'
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
