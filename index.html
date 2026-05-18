@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html">Максим</a>
+            <a class="navbar-brand fw-bold" href="#home">Максим</a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,7 +29,14 @@
         </div>
     </nav>
     <section id="home" class="hero d-flex align-items-center">
-        <div class="container text-center">
+        <div class="container text-center position-relative">
+            <!-- Interactive Bubbles Container -->
+            <div class="bubbles-container">
+                <div class="bubble bubble-1"></div>
+                <div class="bubble bubble-2"></div>
+                <div id="particles-container"></div>
+            </div>
+            
             <img src="./imgs/ava.jpg" alt="Аватар" class="avatar mb-4">
             <h1 class="display-4 fw-bold">
                 Привіт, я <span class="text-primary">Максим</span>
@@ -136,10 +143,10 @@
             </div>
         </div>
     </section>
-    <section id="contact" class="py-5 bg-light">
+    <section id="contact" class="py-5">
         <div class="container text-center">
             <h2 class="section-title mb-5">Зв'язатися</h2>
-            <p class="text-muted mb-4 fs-5">Нижче ви можете зв'язатися зі мною та переглянути початковий код моїх інших проєктів та напрацювань.</p>
+            <p class="text-muted mb-5 fs-5">Нижче ви можете зв'язатися зі мною та переглянути початковий код моїх інших проєктів та напрацювань.</p>
             <div class="d-flex justify-content-center gap-4 flex-wrap">
                 <a href="https://github.com/Max1muuuus" class="contact-link" target="_blank" title="GitHub">
                     <i class="bi bi-github display-4"></i>
@@ -152,7 +159,7 @@
             </div>
         </div>
     </section>
-    <footer class="py-4 bg-black border-top text-center">
+    <footer class="py-4 border-top text-center">
         <div class="container">
             <p class="text-muted mb-0">
                 &copy; 2026 Максим, 14 років. Всі права захищені. Розроблено з любов'ю та ентузіазмом.

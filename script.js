@@ -107,4 +107,190 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         lastScroll = currentScroll;
     });
-}); 
+
+    // ==================== INTERACTIVE BUBBLES ====================
+    const bubbles = document.querySelectorAll('.bubble');
+    const particlesContainer = document.getElementById('particles-container');
+    let mouseX = 0;
+    let mouseY = 0;
+
+    // Track mouse position
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    // Bubble object to track state
+    const bubbleStates = {
+        'bubble-1': { targetX: 0, targetY: 0, x: 0, y: 0, vx: 0, vy: 0, alive: true, size: 80 },
+        'bubble-2': { targetX: 0, targetY: 0, x: 0, y: 0, vx: 0, vy: 0, alive: true, size: 60 }
+    };
+
+    // Initialize bubble positions
+    bubbles.forEach((bubble, index) => {
+        const rect = bubble.getBoundingClientRect();
+        const key = index === 0 ? 'bubble-1' : 'bubble-2';
+        bubbleStates[key].x = rect.left;
+        bubbleStates[key].y = rect.top;
+    });
+
+    // Create particles effect
+    function createParticles(x, y, bubbleSize, isBlue) {
+        const particleCount = 12;
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 8 + 3;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = x + 'px';
+            particle.style.top = y + 'px';
+            
+            const color1 = isBlue ? 'rgba(100, 200, 255' : 'rgba(200, 100, 255';
+            particle.style.background = color1 + ', ' + (Math.random() * 0.6 + 0.4) + ')';
+            particle.style.boxShadow = '0 0 10px ' + color1 + ', 0.8)';
+            
+            const angle = (Math.PI * 2 * i) / particleCount;
+            const speed = Math.random() * 6 + 4;
+            const vx = Math.cos(angle) * speed;
+            const vy = Math.sin(angle) * speed;
+            
+            particlesContainer.appendChild(particle);
+            
+            // Animate particle
+            let px = x;
+            let py = y;
+            let pvx = vx;
+            let pvy = vy;
+            
+            function animateParticle() {
+                px += pvx;
+                py += pvy;
+                pvy += 0.2; // gravity
+                pvx *= 0.98; // friction
+                
+                particle.style.left = px + 'px';
+                particle.style.top = py + 'px';
+                particle.style.opacity = parseFloat(particle.style.opacity || 1) - 0.02;
+                
+                if (parseFloat(particle.style.opacity) > 0) {
+                    requestAnimationFrame(animateParticle);
+                } else {
+                    particle.remove();
+                }
+            }
+            animateParticle();
+        }
+    }
+
+    // Handle bubble click/break
+    bubbles.forEach((bubble, index) => {
+        bubble.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const key = index === 0 ? 'bubble-1' : 'bubble-2';
+            const isBlue = index === 0;
+            
+            if (bubbleStates[key].alive) {
+                const rect = bubble.getBoundingClientRect();
+                createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, bubbleStates[key].size, isBlue);
+                
+                // Add disappear animation
+                bubble.style.animation = 'none';
+                bubble.style.opacity = '0';
+                bubble.style.transform = 'scale(0)';
+                bubbleStates[key].alive = false;
+                
+                // Respawn after 3 seconds
+                setTimeout(() => {
+                    bubbleStates[key].alive = true;
+                    bubble.style.opacity = '1';
+                    bubble.style.animation = index === 0 ? 'float 6s ease-in-out infinite' : 'float 8s ease-in-out infinite reverse';
+                    const initialPos = index === 0 ? { x: '10%', y: '20%' } : { x: 'auto', y: '60%', right: '10%' };
+                    bubble.style.left = initialPos.x || 'auto';
+                    bubble.style.top = initialPos.y || 'auto';
+                    if (initialPos.right) bubble.style.right = initialPos.right;
+                }, 3000);
+            }
+        });
+    });
+
+    // Smooth follow animation loop
+    function animateBubbles() {
+        bubbles.forEach((bubble, index) => {
+            const key = index === 0 ? 'bubble-1' : 'bubble-2';
+            
+            if (bubbleStates[key].alive) {
+                const rect = bubble.getBoundingClientRect();
+                const distance = Math.sqrt(Math.pow(mouseX - rect.left - rect.width / 2, 2) + Math.pow(mouseY - rect.top - rect.height / 2, 2));
+                
+                // Attraction radius
+                if (distance < 300) {
+                    const angle = Math.atan2(mouseY - (rect.top + rect.height / 2), mouseX - (rect.left + rect.width / 2));
+                    const speed = (300 - distance) / 300 * 2;
+                    
+                    bubbleStates[key].vx = Math.cos(angle) * speed;
+                    bubbleStates[key].vy = Math.sin(angle) * speed;
+                } else {
+                    bubbleStates[key].vx *= 0.95;
+                    bubbleStates[key].vy *= 0.95;
+                }
+                
+                // Update position
+                bubbleStates[key].x += bubbleStates[key].vx;
+                bubbleStates[key].y += bubbleStates[key].vy;
+                
+                // Boundary check
+                if (bubbleStates[key].x < 0) bubbleStates[key].x = window.innerWidth;
+                if (bubbleStates[key].x > window.innerWidth) bubbleStates[key].x = 0;
+                if (bubbleStates[key].y < 0) bubbleStates[key].y = window.innerHeight;
+                if (bubbleStates[key].y > window.innerHeight) bubbleStates[key].y = 0;
+            }
+        });
+        
+        requestAnimationFrame(animateBubbles);
+    }
+    
+    animateBubbles();
+
+    // Add click ripple effect to buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.position = 'absolute';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.style.background = 'rgba(255, 255, 255, 0.5)';
+            ripple.style.borderRadius = '50%';
+            ripple.style.pointerEvents = 'none';
+            ripple.style.animation = 'ripple 0.6s ease-out';
+            
+            if (!this.style.position || this.style.position === 'static') {
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+            }
+            
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+
+    // Add ripple animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    `;
+    document.head.appendChild(style);
+
+}); // END of DOMContentLoaded 
