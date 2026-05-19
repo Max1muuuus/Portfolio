@@ -114,19 +114,16 @@ document.addEventListener('DOMContentLoaded', function () {
     let mouseX = 0;
     let mouseY = 0;
 
-    // Track mouse position
     document.addEventListener('mousemove', function(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
-    // Bubble object to track state
     const bubbleStates = {
         'bubble-1': { targetX: 0, targetY: 0, x: 0, y: 0, vx: 0, vy: 0, alive: true, size: 80 },
         'bubble-2': { targetX: 0, targetY: 0, x: 0, y: 0, vx: 0, vy: 0, alive: true, size: 60 }
     };
 
-    // Initialize bubble positions
     bubbles.forEach((bubble, index) => {
         const rect = bubble.getBoundingClientRect();
         const key = index === 0 ? 'bubble-1' : 'bubble-2';
@@ -134,7 +131,6 @@ document.addEventListener('DOMContentLoaded', function () {
         bubbleStates[key].y = rect.top;
     });
 
-    // Create particles effect
     function createParticles(x, y, bubbleSize, isBlue) {
         const particleCount = 12;
         for (let i = 0; i < particleCount; i++) {
@@ -157,8 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const vy = Math.sin(angle) * speed;
             
             particlesContainer.appendChild(particle);
-            
-            // Animate particle
+
             let px = x;
             let py = y;
             let pvx = vx;
@@ -184,7 +179,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Handle bubble click/break
     bubbles.forEach((bubble, index) => {
         bubble.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -195,13 +189,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const rect = bubble.getBoundingClientRect();
                 createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, bubbleStates[key].size, isBlue);
                 
-                // Add disappear animation
                 bubble.style.animation = 'none';
                 bubble.style.opacity = '0';
                 bubble.style.transform = 'scale(0)';
                 bubbleStates[key].alive = false;
                 
-                // Respawn after 3 seconds
                 setTimeout(() => {
                     bubbleStates[key].alive = true;
                     bubble.style.opacity = '1';
@@ -215,7 +207,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Smooth follow animation loop
     function animateBubbles() {
         bubbles.forEach((bubble, index) => {
             const key = index === 0 ? 'bubble-1' : 'bubble-2';
@@ -224,7 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const rect = bubble.getBoundingClientRect();
                 const distance = Math.sqrt(Math.pow(mouseX - rect.left - rect.width / 2, 2) + Math.pow(mouseY - rect.top - rect.height / 2, 2));
                 
-                // Attraction radius
                 if (distance < 300) {
                     const angle = Math.atan2(mouseY - (rect.top + rect.height / 2), mouseX - (rect.left + rect.width / 2));
                     const speed = (300 - distance) / 300 * 2;
@@ -253,7 +243,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     animateBubbles();
 
-    // Add click ripple effect to buttons
     document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             const ripple = document.createElement('span');
@@ -281,7 +270,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Add ripple animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes ripple {
@@ -293,4 +281,4 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     document.head.appendChild(style);
 
-}); // END of DOMContentLoaded 
+});
