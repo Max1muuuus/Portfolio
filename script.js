@@ -160,11 +160,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const vy = Math.sin(angle) * speed;
             
             particlesContainer.appendChild(particle);
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> origin/main
             let px = x;
             let py = y;
             let pvx = vx;
@@ -200,11 +195,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const rect = bubble.getBoundingClientRect();
                 createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, bubbleStates[key].size, isBlue);
                 
-<<<<<<< HEAD
-                    bubble.style.animation = 'none';
-=======
                 bubble.style.animation = 'none';
->>>>>>> origin/main
                 bubble.style.opacity = '0';
                 bubble.style.transform = 'scale(0)';
                 bubbleStates[key].alive = false;
