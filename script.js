@@ -70,7 +70,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+                    const target = entry.target;
+                    target.classList.add('visible');
+                    const onTransitionEnd = function(event) {
+                        if (event.propertyName === 'transform') {
+                            target.style.transitionDelay = '';
+                            target.removeEventListener('transitionend', onTransitionEnd);
+                        }
+                    };
+                    target.addEventListener('transitionend', onTransitionEnd);
                 }
             });
         }, observerOptions);
@@ -108,25 +116,21 @@ document.addEventListener('DOMContentLoaded', function () {
         lastScroll = currentScroll;
     });
 
-    // ==================== INTERACTIVE BUBBLES ====================
     const bubbles = document.querySelectorAll('.bubble');
     const particlesContainer = document.getElementById('particles-container');
     let mouseX = 0;
     let mouseY = 0;
 
-    // Track mouse position
     document.addEventListener('mousemove', function(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
     });
 
-    // Bubble object to track state
     const bubbleStates = {
         'bubble-1': { targetX: 0, targetY: 0, x: 0, y: 0, vx: 0, vy: 0, alive: true, size: 80 },
         'bubble-2': { targetX: 0, targetY: 0, x: 0, y: 0, vx: 0, vy: 0, alive: true, size: 60 }
     };
 
-    // Initialize bubble positions
     bubbles.forEach((bubble, index) => {
         const rect = bubble.getBoundingClientRect();
         const key = index === 0 ? 'bubble-1' : 'bubble-2';
@@ -134,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
         bubbleStates[key].y = rect.top;
     });
 
-    // Create particles effect
     function createParticles(x, y, bubbleSize, isBlue) {
         const particleCount = 12;
         for (let i = 0; i < particleCount; i++) {
@@ -158,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function () {
             
             particlesContainer.appendChild(particle);
             
-            // Animate particle
             let px = x;
             let py = y;
             let pvx = vx;
@@ -167,8 +169,8 @@ document.addEventListener('DOMContentLoaded', function () {
             function animateParticle() {
                 px += pvx;
                 py += pvy;
-                pvy += 0.2; // gravity
-                pvx *= 0.98; // friction
+                pvy += 0.2;
+                pvx *= 0.98;
                 
                 particle.style.left = px + 'px';
                 particle.style.top = py + 'px';
@@ -184,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Handle bubble click/break
     bubbles.forEach((bubble, index) => {
         bubble.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -195,13 +196,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 const rect = bubble.getBoundingClientRect();
                 createParticles(rect.left + rect.width / 2, rect.top + rect.height / 2, bubbleStates[key].size, isBlue);
                 
-                // Add disappear animation
-                bubble.style.animation = 'none';
+                    bubble.style.animation = 'none';
                 bubble.style.opacity = '0';
                 bubble.style.transform = 'scale(0)';
                 bubbleStates[key].alive = false;
                 
-                // Respawn after 3 seconds
                 setTimeout(() => {
                     bubbleStates[key].alive = true;
                     bubble.style.opacity = '1';
@@ -215,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Smooth follow animation loop
     function animateBubbles() {
         bubbles.forEach((bubble, index) => {
             const key = index === 0 ? 'bubble-1' : 'bubble-2';
@@ -224,7 +222,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const rect = bubble.getBoundingClientRect();
                 const distance = Math.sqrt(Math.pow(mouseX - rect.left - rect.width / 2, 2) + Math.pow(mouseY - rect.top - rect.height / 2, 2));
                 
-                // Attraction radius
                 if (distance < 300) {
                     const angle = Math.atan2(mouseY - (rect.top + rect.height / 2), mouseX - (rect.left + rect.width / 2));
                     const speed = (300 - distance) / 300 * 2;
@@ -236,11 +233,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     bubbleStates[key].vy *= 0.95;
                 }
                 
-                // Update position
                 bubbleStates[key].x += bubbleStates[key].vx;
                 bubbleStates[key].y += bubbleStates[key].vy;
                 
-                // Boundary check
                 if (bubbleStates[key].x < 0) bubbleStates[key].x = window.innerWidth;
                 if (bubbleStates[key].x > window.innerWidth) bubbleStates[key].x = 0;
                 if (bubbleStates[key].y < 0) bubbleStates[key].y = window.innerHeight;
@@ -253,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function () {
     
     animateBubbles();
 
-    // Add click ripple effect to buttons
     document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             const ripple = document.createElement('span');
@@ -281,7 +275,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Add ripple animation
     const style = document.createElement('style');
     style.textContent = `
         @keyframes ripple {
@@ -293,4 +286,4 @@ document.addEventListener('DOMContentLoaded', function () {
     `;
     document.head.appendChild(style);
 
-}); // END of DOMContentLoaded 
+});
